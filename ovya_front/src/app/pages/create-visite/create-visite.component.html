@@ -1,0 +1,54 @@
+<div class="page-split">
+    <div class="left-column">
+        <div class="form-container">
+            <div class="tabs">
+                <button (click)="mode = 'create'" [class.active]="mode === 'create'">Créer une visite</button>
+                <button (click)="mode = 'delete'" [class.active]="mode === 'delete'">Supprimer un acquéreur</button>
+            </div>
+            <form *ngIf="mode === 'create'" [formGroup]="form" (ngSubmit)="onSubmit()">
+                <h2 class="smallTitle">Créer une visite</h2>
+                <label>ID Dossier</label>
+                <div class="input-wrapper">
+                    <input type="text" formControlName="dossier_id" autocomplete="off" />
+                    <ul class="autocomplete-list" *ngIf="suggestions.length">
+                        <li *ngFor="let suggestion of suggestions" (click)="selectSuggestion(suggestion)">
+                            {{ suggestion.Id }}
+                        </li>
+                    </ul>
+                </div>
+                <label>Date début</label>
+                <input type="datetime-local" formControlName="date_start" />
+                <label>Date fin</label>
+                <input type="datetime-local" formControlName="date_end" />
+                <label>Nom acquéreur</label>
+                <div class="input-wrapper">
+                    <input type="text" formControlName="acq_name" autocomplete="off" />
+                    <ul class="autocomplete-list" *ngIf="suggestionsAcq.length">
+                        <li *ngFor="let suggestion of suggestionsAcq" (click)="selectAcqSuggestion(suggestion)">
+                            {{ suggestion.Nom }}
+                        </li>
+                    </ul>
+                </div>
+                <label>ID commercial</label>
+                <input type="number" formControlName="ccial_id" />
+                <button type="submit">Créer la visite</button>
+            </form>
+            <div *ngIf="mode === 'delete'">
+                <h2 class="smallTitle">Supprimer un acquéreur</h2>
+                <div class="input-wrapper">
+                    <input type="text" [formControl]="deleteAcqNameControl" placeholder="Nom de l’acquéreur"
+                        autocomplete="off" />
+                    <ul class="autocomplete-list" *ngIf="deleteSuggestions.length">
+                        <li *ngFor="let acq of deleteSuggestions" (click)="selectAcqToDelete(acq)">
+                            {{ acq.Nom }}
+                        </li>
+                    </ul>
+                </div>
+                <button class="space" (click)="onDelete()">Supprimer</button>
+            </div>
+        </div>
+    </div>
+    <div class="right-column">
+        <img src="/assets/images/visite.jpg" alt="illustration" />
+    </div>
+</div>

@@ -1,0 +1,39 @@
+<div class="container">
+    <h2>Liste des visites</h2>
+    <div class="search-bar">
+        <div style="margin-bottom: 5px;">
+            <label for="filterType">Filtrer par :</label>
+            <select id="filterType" [formControl]="filterTypeControl">
+                <option value="acq">Nom acquéreur</option>
+                <option value="date">Date</option>
+                <option value="ccial">ID commercial</option>
+                <option value="dossier">ID dossier</option>
+            </select>
+        </div>
+        <input [formControl]="searchControl" placeholder="Recherche..." />
+    </div>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Date Début</th>
+                <th>Date Fin</th>
+                <th>Acquéreur</th>
+                <th>Commercial</th>
+                <th>Dossier</th>
+                <th>Annulée</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let visite of filteredVisites">
+                <td>{{ visite.id }}</td>
+                <td>{{ visite.date_start | date:'fullDate':'':'fr-FR' }}</td>
+                <td>{{ visite.date_end | date:'fullDate':'':'fr-FR' }}</td>
+                <td>{{ visite.acq_name }}</td>
+                <td>{{ visite.ccial_id }}</td>
+                <td>{{ visite.dossier_id }}</td>
+                <td>{{ visite.canceled ? 'Oui' : 'Non' }}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>

@@ -1,0 +1,39 @@
+services:
+  db:
+    image: postgres:15
+    container_name: ovya_postgres
+    restart: always
+    environment:
+      POSTGRES_USER: ovya
+      POSTGRES_PASSWORD: ovya
+      POSTGRES_DB: ovyadb
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./ovya_db/create_table.sql:/docker-entrypoint-initdb.d/create_table.sql
+
+  backend:
+    build: ./ovya_backend
+    container_name: ovya_backend
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+    environment:
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_USER: ovya
+      DB_PASSWORD: ovya
+      DB_NAME: ovya_recrutement
+
+  frontend:
+    build: ./ovya_front
+    container_name: ovya_frontend
+    volumes:
+    - ./ovya_front:/app
+    - /app/node_modules
+    ports:
+      - "4200:4200"
+    depends_on:
+      - backend
+    command: npm start
