@@ -57,7 +57,7 @@ Dans le répertoire du backend, exécutez :
 `go mod tidy `
 `go run main.go`
 
-#### 3. Lancer le frontend
+#### Lancer le frontend
 
 Dans le répertoire du frontend, assurez-vous d'avoir installé les dépendances et lancez le serveur Angular :
 
@@ -65,15 +65,21 @@ Dans le répertoire du frontend, assurez-vous d'avoir installé les dépendances
 `npm install`
 `ng serve`
 
-## 4. Tester l'application via Postman
+[Accéder au site web en cliquant ici](http://localhost:4200)
+
+## Tester l'application via Postman
 
 Avant de tester l'application, vous devez d'abord créer des **acquéreurs**, des **commerciaux**, et des **dossiers** dans la base de données. Vous pouvez faire cela facilement en utilisant Postman.
 
 ### Étapes pour tester l'application :
 
-## 4. Workspace Postman
+## Workspace Postman
 
-1. **Importez la collection Postman** :
+### 2 possibilitées:
+
+#### via le lien ci-dessous
+
+1. **Importez le workspace Postman** :
 Vous pouvez accéder au workspace Postman pour ce projet en cliquant sur le lien ci-dessous :
 
 [Accéder au Workspace Postman ici](https://app.getpostman.com/join-team?invite_code=f79566e43f2fd8ab619f5452eb7141af8897c1de713d415b9a829009611c170b&target_code=6f82812c6d576f10e4ac9f1a885b4efc)
@@ -87,3 +93,9 @@ Vous pouvez accéder au workspace Postman pour ce projet en cliquant sur le lien
 
 4. **Créez des dossiers** :
    - Créez des dossiers en utilisant les requêtes sous **POST Create Folder** dans Postman. Ces dossiers seront utilisés pour tester les fonctionnalités de gestion des dossiers dans l'application.
+
+#### via les fichiers json présent dans le dossier postman_collection
+
+#### **Importez les collections dans Postman** :
+
+importer chaque fichier présent dans postman_collection dans Postman

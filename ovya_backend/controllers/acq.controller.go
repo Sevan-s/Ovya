@@ -91,19 +91,16 @@ func CreateAcqHandler(db *sql.DB) http.HandlerFunc {
 
 func DeleteAcqHandler(db *sql.DB) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		fmt.Println("Méthode reçue:", r.Method)
+		fmt.Println("Method received:", r.Method)
 		id, err := middleware.ExtractQueryId(r)
 		if err != nil {
-			fmt.Println("Erreur d'extraction de l'ID:", err)
+			fmt.Println("ID extraction error:", err)
 			http.Error(w, err.Error(), http.StatusBadRequest)
 			return
 		}
 
-		fmt.Println("Tentative de suppression de l'utilisateur ID:", id)
-
 		err = services.DeleteAcq(db, id)
 		if err != nil {
-			fmt.Println("Erreur de suppression:", err)
 			http.Error(w, "Failed to delete User", http.StatusInternalServerError)
 			return
 		}

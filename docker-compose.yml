@@ -25,6 +25,7 @@ services:
       DB_USER: ovya
       DB_PASSWORD: ovya
       DB_NAME: ovya_recrutement
+      FRONT_ADD: http://localhost:4200
 
   frontend:
     build: ./ovya_front

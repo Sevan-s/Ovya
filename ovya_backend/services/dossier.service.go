@@ -17,7 +17,7 @@ func CreateFolder(db *sql.DB, folder model.Folder) (int, error) {
 	`, time.Now(), folder.Ccial_Id).Scan(&folderId)
 
 	if err != nil {
-		return 0, fmt.Errorf("échec création dossier : %v", err)
+		return 0, fmt.Errorf("folder creation failure: %v", err)
 	}
 
 	_, err = db.Exec(`
@@ -26,7 +26,7 @@ func CreateFolder(db *sql.DB, folder model.Folder) (int, error) {
 	`, folderId, folder.Ccial_Id, time.Now())
 
 	if err != nil {
-		return 0, fmt.Errorf("échec ajout historique : %v", err)
+		return 0, fmt.Errorf("failed historical addition : %v", err)
 	}
 
 	return folderId, nil

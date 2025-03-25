@@ -24,7 +24,7 @@ func DbConnection() (*sql.DB, error) {
 	for i := 0; i < 10; i++ {
 		db, err = sql.Open("postgres", databaseUrl)
 		if err != nil {
-			fmt.Printf("Tentative %d : erreur d'ouverture : %v\n", i+1, err)
+			fmt.Printf("Attempt %d : opening error : %v\n", i+1, err)
 			time.Sleep(2 * time.Second)
 			continue
 		}
@@ -34,9 +34,9 @@ func DbConnection() (*sql.DB, error) {
 			return db, nil
 		}
 
-		fmt.Printf("Tentative %d : ping échoué : %v\n", i+1, err)
+		fmt.Printf("Attempt %d : ping failed : %v\n", i+1, err)
 		time.Sleep(2 * time.Second)
 	}
 
-	return nil, fmt.Errorf("échec de la connexion à la base après plusieurs tentatives : %v", err)
+	return nil, fmt.Errorf("failed to connect to the database after several attempts : %v", err)
 }

@@ -3,11 +3,11 @@ package controllers
 import (
 	"database/sql"
 	"encoding/json"
+	"fmt"
 	"net/http"
 	"ovya_backend/middleware"
 	"ovya_backend/model"
 	"ovya_backend/services"
-	"fmt"
 )
 
 func GetCcialByEmailHandler(db *sql.DB) http.HandlerFunc {
@@ -164,17 +164,17 @@ func UpdateCcialIdHandler(db *sql.DB) http.HandlerFunc {
 		}
 
 		if err := json.NewDecoder(req.Body).Decode(&data); err != nil {
-			http.Error(res, "Requête invalide", http.StatusBadRequest)
+			http.Error(res, "Invalid Request", http.StatusBadRequest)
 			return
 		}
 
 		if err := services.UpdateDossierCommercial(db, data.DossierID, data.CcialID); err != nil {
-			http.Error(res, fmt.Sprintf("Erreur : %v", err), http.StatusInternalServerError)
+			http.Error(res, fmt.Sprintf("error : %v", err), http.StatusInternalServerError)
 			return
 		}
 
 		json.NewEncoder(res).Encode(map[string]string{
-			"message": "Affectation mise à jour avec historique",
+			"message": "Assignment updated with history",
 		})
 	}
 }
