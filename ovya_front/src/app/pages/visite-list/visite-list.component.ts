@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { combineLatest } from 'rxjs';
-import { startWith } from 'rxjs/operators'; // Ajoute cette importation
+import { startWith } from 'rxjs/operators';
 
 interface Visite {
   id: number;
@@ -34,7 +34,7 @@ export class VisiteListComponent {
   visites: Visite[] = [];
   filteredVisites: Visite[] = [];
   allAcq: Acq[] = [];
-
+  dataIsEmpty: boolean= false;
   searchControl = new FormControl('');
   filterTypeControl = new FormControl('acq');
 
@@ -70,8 +70,16 @@ export class VisiteListComponent {
   loadData() {
     this.http.get<Visite[]>('http://localhost:8080/api/v1/visite/all').subscribe(visites => {
       this.visites = visites;
-      this.loadAcqs();
+
+      console.log("visite", this.visites)
+      if (this.visites !== null) {
+        this.loadAcqs();
+      this.dataIsEmpty = false;
+    }
+      else
+        this.dataIsEmpty = true
     });
+
   }
 
   loadAcqs() {

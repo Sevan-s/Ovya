@@ -13,7 +13,6 @@ import (
 
 func CreateVisiteHandler(db *sql.DB) http.HandlerFunc {
 	return func(res http.ResponseWriter, req *http.Request) {
-
 		var newVisite model.Visite
 
 		err := json.NewDecoder(req.Body).Decode(&newVisite)
@@ -22,8 +21,32 @@ func CreateVisiteHandler(db *sql.DB) http.HandlerFunc {
 			return
 		}
 
-		if newVisite.DateStart.IsZero() || newVisite.DateEnd.IsZero() {
-			http.Error(res, "Invalid date values", http.StatusBadRequest)
+		missingFields := []string{}
+
+		if newVisite.DateStart.IsZero() {
+			missingFields = append(missingFields, "date_start")
+		}
+
+		if newVisite.DateEnd.IsZero() {
+			missingFields = append(missingFields, "date_end")
+		}
+
+		if newVisite.AcqId == 0 {
+			missingFields = append(missingFields, "acq_id")
+		}
+
+		if newVisite.CcialId == 0 {
+			missingFields = append(missingFields, "ccial_id")
+		}
+
+		if len(missingFields) > 0 {
+			errorMessage := map[string]interface{}{
+				"error":  "Missing fields",
+				"fields": missingFields,
+			}
+			res.Header().Set("Content-Type", "application/json")
+			res.WriteHeader(http.StatusBadRequest)
+			json.NewEncoder(res).Encode(errorMessage)
 			return
 		}
 
